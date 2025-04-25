@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LockClosedIcon } from '@heroicons/react/24/outline'
+import { useRouter } from 'next/navigation'
 
 const schema = z.object({
   email: z.string().email({ message: 'ایمیل معتبر نیست' }),
@@ -14,6 +15,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export default function SignInPage() {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
 
   const {
@@ -31,11 +33,16 @@ export default function SignInPage() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
   
       if (res.ok) {
         alert('ورود موفق')
-        window.location.href = '/dashboard'
+        // window.location.href = '/dashboard'
+        router.push('/dashboard')
       } else {
         const error = await res.json()
         alert(error.error)

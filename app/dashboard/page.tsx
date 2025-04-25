@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { redirect } from 'next/navigation'
 import Logout from '../(auth)/logout'
 
-const JWT_SECRET = 'your_secret_key'
+const JWT_SECRET = process.env.JWT_SECRET as string
 
 export default async function DashboardPage() {
   const cookieStore = await cookies()

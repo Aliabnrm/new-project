@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY as string
+const JWT_SECRET = process.env.JWT_SECRET as string
 
 export async function getUserFromToken(): Promise<{ email: string } | null> {
   const cookieStore = await cookies()
